@@ -29,10 +29,12 @@ import math._;
 class Vector4D(x: Double, y: Double, z: Double, w: Double) {
   require(w != 0)
 
-  val p = List[Double](x, y, z, w)
+  val p = List(x, y, z, w)
 
   def this(x: Double, y: Double, z: Double) =
-    this(x, y, z, 1.0)
+    this(x, y, z, 1)
+  def this(l: List[Double]) =
+    this(l(0), l(1), l(2), l(3))
 
   def length = sqrt(x*x + y*y + z*z) * w
   def normalize = new Vector4D(x, y, z, w/length)
@@ -55,6 +57,9 @@ class Vector4D(x: Double, y: Double, z: Double, w: Double) {
   def dot(v: Vector4D) = {
     val s = w * v.p(3)
     s * (x * v.p(0) + y * v.p(1) + z * v.p(2))
+  }
+  def dot(l: List[Double]): Double = {
+    dot(new Vector4D(l))
   }
   def cross(v: Vector4D) = {
     val s = w * v.p(3)
