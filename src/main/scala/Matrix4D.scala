@@ -82,19 +82,3 @@ class Matrix4D(x1: Double, y1: Double, z1: Double, w1: Double,
   private def add(a: Double, b: Double) = a + b
   private def sub(a: Double, b: Double) = a - b
 }
-
-object Test {
-  def main(args: Array[String]) = {
-    val v1 = new Vector4D(1,2,1)
-    val m1 = new Matrix4D
-    val m2 = new Matrix4D(1,2,1,1,2,2,1,1,3,1,2,1,4,2,3,1)
-
-    println(v1)
-    println(v1.normalize)
-    println(m1)
-    println(m2)
-    println(m2 * v1)
-    println(m1 + m2)
-    println(m1 - m2)
-  }
-}
