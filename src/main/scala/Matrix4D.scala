@@ -41,7 +41,7 @@ class Matrix4D(x1: Double, y1: Double, z1: Double, w1: Double,
 		    0, 1, 0, 0,
 		    0, 0, 1, 0,
 		    0, 0, 0, 1)
-  def this(l1: List[Double], l2: List[Double], 
+  def this(l1: List[Double], l2: List[Double],
 	   l3: List[Double], l4: List[Double]) =
     this(l1(0), l1(1), l1(2), l1(3),
 	 l2(0), l2(1), l2(2), l2(3),
@@ -65,10 +65,10 @@ class Matrix4D(x1: Double, y1: Double, z1: Double, w1: Double,
   def *(v: Vector4D) = {
     val vr = v.reset
       // TODO change dot
-    new Vector4D(vr dot p(0),
-		 vr dot p(1),
-		 vr dot p(2),
-		 vr dot p(3))
+    new Vector4D(vr dot4 p(0),
+		 vr dot4 p(1),
+		 vr dot4 p(2),
+		 vr dot4 p(3))
   }
 
   override def toString = "(" +

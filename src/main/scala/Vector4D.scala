@@ -27,8 +27,6 @@ package scare;
 import math._;
 
 class Vector4D(x: Double, y: Double, z: Double, w: Double) {
-  require(w != 0)
-
   val p = List(x, y, z, w)
 
   def this(x: Double, y: Double, z: Double) =
@@ -52,15 +50,16 @@ class Vector4D(x: Double, y: Double, z: Double, w: Double) {
     val s = w / v.p(3)
     new Vector4D(x - v.p(0) / s, y - v.p(1) / s, z - v.p(2) / s, w)
   }
+  def unary_- = new Vector4D(-x, -y, -z, w)
 
   // |a||b|cos(a, b)
-  def dot(v: Vector4D) = {
-    val s = w * v.p(3)
-    s * (x * v.p(0) + y * v.p(1) + z * v.p(2))
-  }
-  def dot(l: List[Double]): Double = {
-    dot(new Vector4D(l))
-  }
+  def dot(v: Vector4D) = dot3(v)
+  def dot(l: List[Double]) = dot3(l)
+  def dot3(v: Vector4D) = w * v.p(3) * (x * v.p(0) + y * v.p(1) + z * v.p(2))
+  def dot3(l: List[Double]): Double = dot(new Vector4D(l))
+  def dot4(v: Vector4D) = (x * v.p(0) + y * v.p(1) + z * v.p(2) + w * v.p(3))
+  def dot4(l: List[Double]): Double = dot4(new Vector4D(l))
+
   def cross(v: Vector4D) = {
     val s = w * v.p(3)
     new Vector4D(s * (p(1) * v.p(2) - p(2) * v.p(1)),
@@ -72,7 +71,7 @@ class Vector4D(x: Double, y: Double, z: Double, w: Double) {
 
   override def equals(o: scala.Any): Boolean =
     o match {
-      case v: Vector4D => (v.p(0) == p(0) && v.p(1) == p(1) && v.p(2) == p(2) && v.p(3) == p(3))
+      case v: Vector4D => (v.p(0) == x && v.p(1) == y && v.p(2) == z && v.p(3) == w)
       case _ => false
     }
 }
