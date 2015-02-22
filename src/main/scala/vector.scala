@@ -69,4 +69,10 @@ class Vector4D(x: Double, y: Double, z: Double, w: Double) {
   }
 
   override def toString = "(" + x + ", " + y + ", " + z + ", " + w + ")"
+
+  override def equals(o: scala.Any): Boolean =
+    o match {
+      case v: Vector4D => (v.p(0) == p(0) && v.p(1) == p(1) && v.p(2) == p(2) && v.p(3) == p(3))
+      case _ => false
+    }
 }
