@@ -3,8 +3,8 @@
  * GNU Lesser General Public License
  * ============================================================================
  *
- * Scare - Scala rendering engile
- * Copyright (c) 2013 cuugi(a)iki.fi
+ * Scare - Scala rendering engine
+ * Copyright (c) 2013-2017 cuugi(a)iki.fi
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public

@@ -3,8 +3,8 @@
  * GNU Lesser General Public License
  * ============================================================================
  *
- * Scare - Scala rendering engile
- * Copyright (c) 2013 cuugi(a)iki.fi
+ * Scare - Scala rendering engine
+ * Copyright (c) 2013-2017 cuugi(a)iki.fi
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,20 +22,18 @@
  *
  */
 
-package scare;
+package scare
 
-import math._;
+import scala.math._
 
-class Vector4D(x: Double, y: Double, z: Double, w: Double) {
+case class Vector4D(x: Double, y: Double, z: Double, w: Double = 1.0) {
   val p = List(x, y, z, w)
 
-  def this(x: Double, y: Double, z: Double) =
-    this(x, y, z, 1)
   def this(l: List[Double]) =
     this(l(0), l(1), l(2), l(3))
 
-  def length = sqrt(x*x + y*y + z*z) * w
-  def normalize = new Vector4D(x, y, z, w/length)
+  def length = sqrt(x * x + y * y + z * z) * w
+  def normalize = new Vector4D(x, y, z, w / length)
   def isUnit = (length == 1.0)
   def reset = new Vector4D(x * w, y * w, z * w)
 
@@ -43,35 +41,35 @@ class Vector4D(x: Double, y: Double, z: Double, w: Double) {
   def /(d: Int) = new Vector4D(x, y, z, w / d)
 
   def +(v: Vector4D) = {
-    val s = w / v.p(3)
-    new Vector4D(x + v.p(0) / s, y + v.p(1) / s, z + v.p(2) / s, w)
+    val s = w / v.w
+    new Vector4D(x + v.x / s, y + v.y / s, z + v.z / s, w)
   }
   def -(v: Vector4D) = {
-    val s = w / v.p(3)
-    new Vector4D(x - v.p(0) / s, y - v.p(1) / s, z - v.p(2) / s, w)
+    val s = w / v.w
+    new Vector4D(x - v.x / s, y - v.y / s, z - v.z / s, w)
   }
   def unary_- = new Vector4D(-x, -y, -z, w)
 
   // |a||b|cos(a, b)
   def dot(v: Vector4D) = dot3(v)
   def dot(l: List[Double]) = dot3(l)
-  def dot3(v: Vector4D) = w * v.p(3) * (x * v.p(0) + y * v.p(1) + z * v.p(2))
+  def dot3(v: Vector4D) = w * v.w * (x * v.x + y * v.y + z * v.z)
   def dot3(l: List[Double]): Double = dot(new Vector4D(l))
-  def dot4(v: Vector4D) = (x * v.p(0) + y * v.p(1) + z * v.p(2) + w * v.p(3))
+  def dot4(v: Vector4D) = x * v.z + y * v.y + z * v.z + w * v.w
   def dot4(l: List[Double]): Double = dot4(new Vector4D(l))
 
   def cross(v: Vector4D) = {
-    val s = w * v.p(3)
-    new Vector4D(s * (p(1) * v.p(2) - p(2) * v.p(1)),
-		 s * (p(2) * v.p(0) - p(0) * v.p(2)),
-		 s * (p(0) * v.p(1) - p(1) * v.p(0)));
+    val s = w * v.w
+    new Vector4D(s * (y * v.z - z * v.y),
+                 s * (z * v.x - x * v.z),
+                 s * (x * v.y - y * v.x))
   }
 
   override def toString = "(" + x + ", " + y + ", " + z + ", " + w + ")"
 
   override def equals(o: scala.Any): Boolean =
     o match {
-      case v: Vector4D => (v.p(0) == x && v.p(1) == y && v.p(2) == z && v.p(3) == w)
-      case _ => false
+      case v: Vector4D => v.x == x && v.y == y && v.z == z && v.w == w
+      case _           => false
     }
 }
