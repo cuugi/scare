@@ -53,7 +53,7 @@ case class Vector4D(x: VT, y: VT, z: VT, w: VT = 1.0) {
   def dot(l: List[VT]) = dot3(l)
   def dot3(v: Vector4D) = w * v.w * (x * v.x + y * v.y + z * v.z)
   def dot3(l: List[VT]): VT = dot(Vector4D(l))
-  def dot4(v: Vector4D) = x * v.z + y * v.y + z * v.z + w * v.w
+  def dot4(v: Vector4D) = x * v.x + y * v.y + z * v.z + w * v.w
   def dot4(l: List[VT]): VT = dot4(Vector4D(l))
 
   def cross(v: Vector4D) = {

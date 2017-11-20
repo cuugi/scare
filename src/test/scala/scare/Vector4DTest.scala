@@ -42,6 +42,13 @@ class Vector4DTest extends FunSuite {
     assert(v3v4 === 0)
   }
 
+  test("dot4") {
+    val v1v4 = v1 dot4 v4
+    val v3v4 = v3 dot4 v4
+    assert(v1v4 === 3)
+    assert(v3v4 === 2)
+  }
+
   test("cross") {
     val v1v3 = v1 cross v3
     val v3v4 = v3 cross v4
