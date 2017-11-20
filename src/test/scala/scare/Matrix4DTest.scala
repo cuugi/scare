@@ -1,6 +1,6 @@
-import org.scalatest.FunSuite
+package scare
 
-import scare.{Vector4D, Matrix4D}
+import org.scalatest.FunSuite
 
 class Matrix4DTest extends FunSuite {
 

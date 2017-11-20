@@ -22,8 +22,7 @@
  *
  */
 
-package scare;
-
+package scare
 
 class Matrix4D(x1: Double, y1: Double, z1: Double, w1: Double,
 	       x2: Double, y2: Double, z2: Double, w2: Double,

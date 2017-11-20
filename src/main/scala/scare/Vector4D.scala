@@ -26,19 +26,17 @@ package scare
 
 import scala.math._
 
-case class Vector4D(x: Double, y: Double, z: Double, w: Double = 1.0) {
+case class Vector4D(x: VT, y: VT, z: VT, w: VT = 1.0) {
+
   val p = List(x, y, z, w)
 
-  def this(l: List[Double]) =
-    this(l(0), l(1), l(2), l(3))
-
   def length = sqrt(x * x + y * y + z * z) * w
-  def normalize = new Vector4D(x, y, z, w / length)
-  def isUnit = (length == 1.0)
-  def reset = new Vector4D(x * w, y * w, z * w)
+  def normalize = Vector4D(x, y, z, w / length)
+  def isUnit = length == 1.0
+  def reset = Vector4D(x * w, y * w, z * w)
 
-  def *(m: Int) = new Vector4D(x, y, z, w * m)
-  def /(d: Int) = new Vector4D(x, y, z, w / d)
+  def *(m: VT) = Vector4D(x, y, z, w * m)
+  def /(d: VT) = Vector4D(x, y, z, w / d)
 
   def +(v: Vector4D) = {
     val s = w / v.w
@@ -52,17 +50,17 @@ case class Vector4D(x: Double, y: Double, z: Double, w: Double = 1.0) {
 
   // |a||b|cos(a, b)
   def dot(v: Vector4D) = dot3(v)
-  def dot(l: List[Double]) = dot3(l)
+  def dot(l: List[VT]) = dot3(l)
   def dot3(v: Vector4D) = w * v.w * (x * v.x + y * v.y + z * v.z)
-  def dot3(l: List[Double]): Double = dot(new Vector4D(l))
+  def dot3(l: List[VT]): VT = dot(Vector4D(l))
   def dot4(v: Vector4D) = x * v.z + y * v.y + z * v.z + w * v.w
-  def dot4(l: List[Double]): Double = dot4(new Vector4D(l))
+  def dot4(l: List[VT]): VT = dot4(Vector4D(l))
 
   def cross(v: Vector4D) = {
     val s = w * v.w
-    new Vector4D(s * (y * v.z - z * v.y),
-                 s * (z * v.x - x * v.z),
-                 s * (x * v.y - y * v.x))
+    Vector4D(s * (y * v.z - z * v.y),
+             s * (z * v.x - x * v.z),
+             s * (x * v.y - y * v.x))
   }
 
   override def toString = "(" + x + ", " + y + ", " + z + ", " + w + ")"
@@ -72,4 +70,10 @@ case class Vector4D(x: Double, y: Double, z: Double, w: Double = 1.0) {
       case v: Vector4D => v.x == x && v.y == y && v.z == z && v.w == w
       case _           => false
     }
+}
+
+object Vector4D {
+
+  def apply(l: List[VT]): Vector4D = Vector4D(l(0), l(1), l(2), l(3))
+
 }
