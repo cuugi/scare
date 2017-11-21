@@ -72,11 +72,10 @@ case class Matrix4D(x1: VT,
       i <- 0 to 3
       x <- 0 to 3
       y <- 0 to 3
-    } yield p(i)(y) * m.p(x)(i)
+    } yield m.p(i)(y) * p(x)(i)
     l.grouped(4).grouped(4).foldLeft(Matrix4D.empty()) {
       case (a, b) => a + Matrix4D(b)
     }
-
   }
 
   override def toString =

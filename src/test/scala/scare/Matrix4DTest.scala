@@ -27,7 +27,7 @@ class Matrix4DTest extends FunSuite {
   test("**") {
     val m1m1 = m1 * m1
     val m1m2 = m1 * m2
-    val m2m3 = m3 * m2 // No, wait!
+    val m2m3 = m2 * m3
     val m23 = Matrix4D(5, 4, 8, 0, 0, 0, 0, 0, 0, 1, 0, 1, 5, 4, 8, 1)
     assert(m1m1 === m1)
     assert(m1m2 === m2)
