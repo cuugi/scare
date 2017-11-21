@@ -67,12 +67,23 @@ case class Matrix4D(x1: VT,
     // TODO change dot
     Vector4D(vr dot4 p(0), vr dot4 p(1), vr dot4 p(2), vr dot4 p(3))
   }
+  def *(m: Matrix4D): Matrix4D = {
+    val l = for {
+      i <- 0 to 3
+      x <- 0 to 3
+      y <- 0 to 3
+    } yield p(i)(y) * m.p(x)(i)
+    l.grouped(4).grouped(4).foldLeft(Matrix4D.empty()) {
+      case (a, b) => a + Matrix4D(b)
+    }
+
+  }
 
   override def toString =
     "(" +
-      "(" + x1 + ", " + y1 + ", " + z1 + ", " + w1 + ")" +
-      "(" + x2 + ", " + y2 + ", " + z2 + ", " + w2 + ")" +
-      "(" + x3 + ", " + y3 + ", " + z3 + ", " + w3 + ")" +
+      "(" + x1 + ", " + y1 + ", " + z1 + ", " + w1 + ") " +
+      "(" + x2 + ", " + y2 + ", " + z2 + ", " + w2 + ") " +
+      "(" + x3 + ", " + y3 + ", " + z3 + ", " + w3 + ") " +
       "(" + x4 + ", " + y4 + ", " + z4 + ", " + w4 + ")" + ")"
 
   private def zipWith[A, B, C](a: List[A], b: List[B], f: (A, B) => C) =
@@ -83,11 +94,20 @@ case class Matrix4D(x1: VT,
 
 object Matrix4D {
 
+  def empty(): Matrix4D =
+    Matrix4D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
   /** Identity matrix. */
   def apply(): Matrix4D =
     Matrix4D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
 
-  def apply(l1: List[VT], l2: List[VT], l3: List[VT], l4: List[VT]): Matrix4D =
+  def apply(v1: Vector4D, v2: Vector4D, v3: Vector4D, v4: Vector4D): Matrix4D =
+    apply(v1.p, v2.p, v3.p, v4.p)
+
+  def apply(l: Seq[Seq[VT]]): Matrix4D =
+    apply(l(0), l(1), l(2), l(3))
+
+  def apply(l1: Seq[VT], l2: Seq[VT], l3: Seq[VT], l4: Seq[VT]): Matrix4D =
     Matrix4D(l1(0),
              l1(1),
              l1(2),
